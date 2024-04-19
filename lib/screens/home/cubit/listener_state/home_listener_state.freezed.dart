@@ -18,7 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeListenerState {
   AppSnackBar? get appSnackBar => throw _privateConstructorUsedError;
   String? get navigateToRoute => throw _privateConstructorUsedError;
-  ShowDialog<dynamic>? get showDialog => throw _privateConstructorUsedError;
+  ShowDialog<dynamic>? get showNoteDeleteDialog =>
+      throw _privateConstructorUsedError;
+  ShowDialog<dynamic>? get showSignoutDialog =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeListenerStateCopyWith<HomeListenerState> get copyWith =>
@@ -34,10 +37,12 @@ abstract class $HomeListenerStateCopyWith<$Res> {
   $Res call(
       {AppSnackBar? appSnackBar,
       String? navigateToRoute,
-      ShowDialog<dynamic>? showDialog});
+      ShowDialog<dynamic>? showNoteDeleteDialog,
+      ShowDialog<dynamic>? showSignoutDialog});
 
   $AppSnackBarCopyWith<$Res>? get appSnackBar;
-  $ShowDialogCopyWith<dynamic, $Res>? get showDialog;
+  $ShowDialogCopyWith<dynamic, $Res>? get showNoteDeleteDialog;
+  $ShowDialogCopyWith<dynamic, $Res>? get showSignoutDialog;
 }
 
 /// @nodoc
@@ -55,7 +60,8 @@ class _$HomeListenerStateCopyWithImpl<$Res, $Val extends HomeListenerState>
   $Res call({
     Object? appSnackBar = freezed,
     Object? navigateToRoute = freezed,
-    Object? showDialog = freezed,
+    Object? showNoteDeleteDialog = freezed,
+    Object? showSignoutDialog = freezed,
   }) {
     return _then(_value.copyWith(
       appSnackBar: freezed == appSnackBar
@@ -66,9 +72,13 @@ class _$HomeListenerStateCopyWithImpl<$Res, $Val extends HomeListenerState>
           ? _value.navigateToRoute
           : navigateToRoute // ignore: cast_nullable_to_non_nullable
               as String?,
-      showDialog: freezed == showDialog
-          ? _value.showDialog
-          : showDialog // ignore: cast_nullable_to_non_nullable
+      showNoteDeleteDialog: freezed == showNoteDeleteDialog
+          ? _value.showNoteDeleteDialog
+          : showNoteDeleteDialog // ignore: cast_nullable_to_non_nullable
+              as ShowDialog<dynamic>?,
+      showSignoutDialog: freezed == showSignoutDialog
+          ? _value.showSignoutDialog
+          : showSignoutDialog // ignore: cast_nullable_to_non_nullable
               as ShowDialog<dynamic>?,
     ) as $Val);
   }
@@ -87,13 +97,27 @@ class _$HomeListenerStateCopyWithImpl<$Res, $Val extends HomeListenerState>
 
   @override
   @pragma('vm:prefer-inline')
-  $ShowDialogCopyWith<dynamic, $Res>? get showDialog {
-    if (_value.showDialog == null) {
+  $ShowDialogCopyWith<dynamic, $Res>? get showNoteDeleteDialog {
+    if (_value.showNoteDeleteDialog == null) {
       return null;
     }
 
-    return $ShowDialogCopyWith<dynamic, $Res>(_value.showDialog!, (value) {
-      return _then(_value.copyWith(showDialog: value) as $Val);
+    return $ShowDialogCopyWith<dynamic, $Res>(_value.showNoteDeleteDialog!,
+        (value) {
+      return _then(_value.copyWith(showNoteDeleteDialog: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ShowDialogCopyWith<dynamic, $Res>? get showSignoutDialog {
+    if (_value.showSignoutDialog == null) {
+      return null;
+    }
+
+    return $ShowDialogCopyWith<dynamic, $Res>(_value.showSignoutDialog!,
+        (value) {
+      return _then(_value.copyWith(showSignoutDialog: value) as $Val);
     });
   }
 }
@@ -109,12 +133,15 @@ abstract class _$$HomeListenerStateImplCopyWith<$Res>
   $Res call(
       {AppSnackBar? appSnackBar,
       String? navigateToRoute,
-      ShowDialog<dynamic>? showDialog});
+      ShowDialog<dynamic>? showNoteDeleteDialog,
+      ShowDialog<dynamic>? showSignoutDialog});
 
   @override
   $AppSnackBarCopyWith<$Res>? get appSnackBar;
   @override
-  $ShowDialogCopyWith<dynamic, $Res>? get showDialog;
+  $ShowDialogCopyWith<dynamic, $Res>? get showNoteDeleteDialog;
+  @override
+  $ShowDialogCopyWith<dynamic, $Res>? get showSignoutDialog;
 }
 
 /// @nodoc
@@ -130,7 +157,8 @@ class __$$HomeListenerStateImplCopyWithImpl<$Res>
   $Res call({
     Object? appSnackBar = freezed,
     Object? navigateToRoute = freezed,
-    Object? showDialog = freezed,
+    Object? showNoteDeleteDialog = freezed,
+    Object? showSignoutDialog = freezed,
   }) {
     return _then(_$HomeListenerStateImpl(
       appSnackBar: freezed == appSnackBar
@@ -141,9 +169,13 @@ class __$$HomeListenerStateImplCopyWithImpl<$Res>
           ? _value.navigateToRoute
           : navigateToRoute // ignore: cast_nullable_to_non_nullable
               as String?,
-      showDialog: freezed == showDialog
-          ? _value.showDialog
-          : showDialog // ignore: cast_nullable_to_non_nullable
+      showNoteDeleteDialog: freezed == showNoteDeleteDialog
+          ? _value.showNoteDeleteDialog
+          : showNoteDeleteDialog // ignore: cast_nullable_to_non_nullable
+              as ShowDialog<dynamic>?,
+      showSignoutDialog: freezed == showSignoutDialog
+          ? _value.showSignoutDialog
+          : showSignoutDialog // ignore: cast_nullable_to_non_nullable
               as ShowDialog<dynamic>?,
     ));
   }
@@ -155,7 +187,8 @@ class _$HomeListenerStateImpl implements _HomeListenerState {
   const _$HomeListenerStateImpl(
       {this.appSnackBar = null,
       this.navigateToRoute = null,
-      this.showDialog = null});
+      this.showNoteDeleteDialog = null,
+      this.showSignoutDialog = null});
 
   @override
   @JsonKey()
@@ -165,11 +198,14 @@ class _$HomeListenerStateImpl implements _HomeListenerState {
   final String? navigateToRoute;
   @override
   @JsonKey()
-  final ShowDialog<dynamic>? showDialog;
+  final ShowDialog<dynamic>? showNoteDeleteDialog;
+  @override
+  @JsonKey()
+  final ShowDialog<dynamic>? showSignoutDialog;
 
   @override
   String toString() {
-    return 'HomeListenerState(appSnackBar: $appSnackBar, navigateToRoute: $navigateToRoute, showDialog: $showDialog)';
+    return 'HomeListenerState(appSnackBar: $appSnackBar, navigateToRoute: $navigateToRoute, showNoteDeleteDialog: $showNoteDeleteDialog, showSignoutDialog: $showSignoutDialog)';
   }
 
   @override
@@ -181,13 +217,15 @@ class _$HomeListenerStateImpl implements _HomeListenerState {
                 other.appSnackBar == appSnackBar) &&
             (identical(other.navigateToRoute, navigateToRoute) ||
                 other.navigateToRoute == navigateToRoute) &&
-            (identical(other.showDialog, showDialog) ||
-                other.showDialog == showDialog));
+            (identical(other.showNoteDeleteDialog, showNoteDeleteDialog) ||
+                other.showNoteDeleteDialog == showNoteDeleteDialog) &&
+            (identical(other.showSignoutDialog, showSignoutDialog) ||
+                other.showSignoutDialog == showSignoutDialog));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, appSnackBar, navigateToRoute, showDialog);
+  int get hashCode => Object.hash(runtimeType, appSnackBar, navigateToRoute,
+      showNoteDeleteDialog, showSignoutDialog);
 
   @JsonKey(ignore: true)
   @override
@@ -201,14 +239,17 @@ abstract class _HomeListenerState implements HomeListenerState {
   const factory _HomeListenerState(
       {final AppSnackBar? appSnackBar,
       final String? navigateToRoute,
-      final ShowDialog<dynamic>? showDialog}) = _$HomeListenerStateImpl;
+      final ShowDialog<dynamic>? showNoteDeleteDialog,
+      final ShowDialog<dynamic>? showSignoutDialog}) = _$HomeListenerStateImpl;
 
   @override
   AppSnackBar? get appSnackBar;
   @override
   String? get navigateToRoute;
   @override
-  ShowDialog<dynamic>? get showDialog;
+  ShowDialog<dynamic>? get showNoteDeleteDialog;
+  @override
+  ShowDialog<dynamic>? get showSignoutDialog;
   @override
   @JsonKey(ignore: true)
   _$$HomeListenerStateImplCopyWith<_$HomeListenerStateImpl> get copyWith =>

@@ -12,7 +12,8 @@ class HomeListenerState extends HomeState with _$HomeListenerState {
  const  factory HomeListenerState({
   @Default(null) AppSnackBar? appSnackBar,
   @Default(null) String? navigateToRoute,
-  @Default(null) ShowDialog? showDialog,
+  @Default(null) ShowDialog? showNoteDeleteDialog,
+  @Default(null) ShowDialog? showSignoutDialog,
  }) = _HomeListenerState;
 
  

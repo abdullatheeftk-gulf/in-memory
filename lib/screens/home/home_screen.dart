@@ -11,6 +11,7 @@ import 'package:in_memory/screens/home/children/empty_list.dart';
 import 'package:in_memory/screens/home/cubit/build_state/home_build_state.dart';
 import 'package:in_memory/screens/home/cubit/home_cubit.dart';
 import 'package:in_memory/screens/home/cubit/listener_state/home_listener_state.dart';
+import 'package:in_memory/screens/sign_in/sign_in_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,11 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        
-        content:  const Row(
+        content: const Row(
           children: [
-             Icon(Icons.warning),
-             Text("Do you want to delete this note", style:TextStyle(fontSize: 16)),
+            Icon(Icons.warning),
+            Text("Do you want to delete this note",
+                style: TextStyle(fontSize: 16)),
           ],
         ),
         actions: [
@@ -70,12 +71,48 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // sign out permission dialog
+  void _showSignOutpermissionDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: const Row(
+          children: [
+            Icon(Icons.warning),
+            Text("Do you realy want to Sign out",
+                style: TextStyle(fontSize: 16)),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "No",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _homeCubit.firebaseSignOut();
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "Yes",
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
         if (state is HomeListenerState) {
-
           printWarning("home Listener state $state");
 
           // Showing snackBar
@@ -92,9 +129,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // Showing delete permission dialog
 
-          if(state.showDialog!=null){
-            printDebug("showDialog");
-              _showDoYouWantDeleteDialog(state.showDialog!.value as Note);
+          if (state.showNoteDeleteDialog != null) {
+            _showDoYouWantDeleteDialog(
+                state.showNoteDeleteDialog!.value as Note);
+          }
+
+          // to sign out
+          if (state.showSignoutDialog != null) {
+            _showSignOutpermissionDialog(state.showSignoutDialog!.value);
+          }
+
+          // Navigate
+          if (state.navigateToRoute != null) {
+            final route = state.navigateToRoute!;
+            if (route == "sign_in_screen") {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SignInscreen()),
+                (route) => false,
+              );
+            }
           }
         }
       },
@@ -122,60 +176,84 @@ class _HomeScreenState extends State<HomeScreen> {
 
         // Widget area
         return Scaffold(
-            appBar: AppBar(
-              title: const Text("Home"),
-            ),
-            floatingActionButton: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(),
-                _showProgressBar
-                    ? const CircularProgressIndicator()
-                    : const SizedBox(),
-                FloatingActionButton(
+          appBar: AppBar(
+            title: const Text("Home"),
+          ),
+
+          // Drawer
+          drawer: Drawer(
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                return TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AddScreen(
-                              isEditMode: false,
-                              title: null,
-                              description: null,
-                              id: null,
-                            )));
+                    Navigator.pop(context);
+                    _homeCubit.showSignOutPermissionDialog();
                   },
-                  child: const Icon(Icons.add),
-                ),
-              ],
+                  child: const Text("Sign Out"),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider();
+              },
+              itemCount: 1,
             ),
+          ),
+          onDrawerChanged: (flag) {
+            printDebug(flag);
+          },
 
-            // Body part
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Error message
-                _errorMessage != null
-                    ? Text(
-                        _errorMessage!,
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.error),
-                      )
-                    : const SizedBox(),
+          //Floating Action button
+          floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const SizedBox(),
+              _showProgressBar
+                  ? const CircularProgressIndicator()
+                  : const SizedBox(),
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddScreen(
+                            isEditMode: false,
+                            title: null,
+                            description: null,
+                            id: null,
+                          )));
+                },
+                child: const Icon(Icons.add),
+              ),
+            ],
+          ),
 
-                // List display
-                _listOfDayWithNotes != null
-                    ? _listOfDayWithNotes!.isEmpty
-                        ? const EmmptyList()
-                        : Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: DayWithNoteList(
-                                listOfDayWithNotes: _listOfDayWithNotes!,
-                              ),
+          // Body part
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Error message
+              _errorMessage != null
+                  ? Text(
+                      _errorMessage!,
+                      style:
+                          TextStyle(color: Theme.of(context).colorScheme.error),
+                    )
+                  : const SizedBox(),
+
+              // List display
+              _listOfDayWithNotes != null
+                  ? _listOfDayWithNotes!.isEmpty
+                      ? const EmmptyList()
+                      : Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: DayWithNoteList(
+                              listOfDayWithNotes: _listOfDayWithNotes!,
                             ),
-                          )
-                    : const SizedBox()
-              ],
-            ));
+                          ),
+                        )
+                  : const SizedBox()
+            ],
+          ),
+        );
       },
     );
   }

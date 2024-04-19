@@ -108,7 +108,7 @@ class NoteListTile extends StatelessWidget {
                         }
                         if (cb.name == PopUpMenu.delete.name) {
                          // homeCubit.deleteANote(note:note);
-                          homeCubit.showDialog(note);
+                          homeCubit.showNoteDeleteDialog(note);
                         }
                       },
                       itemBuilder: (BuildContext context) {

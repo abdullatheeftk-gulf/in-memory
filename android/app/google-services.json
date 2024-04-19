@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285744189463",
+    "project_id": "in-memory-3ebcc",
+    "storage_bucket": "in-memory-3ebcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285744189463:android:642582f16f305a6b08cc52",
+        "android_client_info": {
+          "package_name": "com.gulftechinnovations.in_memory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKV9Ol989o9OVTf3exSELrw_5rJGozno4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
